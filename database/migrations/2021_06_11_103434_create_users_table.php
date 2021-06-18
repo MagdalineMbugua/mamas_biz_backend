@@ -19,8 +19,8 @@ class CreateUsersTable extends Migration
             $table->string ('last_name');
             $table->string('phone_number') -> unique();
             $table->string('password');
-            $table->timestamps('created_at');
-            $table->timestamp('updated_at') -> nullable();
+            $table->timestamps();
+            
         });
     }
 

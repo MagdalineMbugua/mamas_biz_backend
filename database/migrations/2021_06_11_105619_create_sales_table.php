@@ -21,8 +21,8 @@ class CreateSalesTable extends Migration
             $table->enum('type', ['purchased', 'sold']);
             $table->enum('status', ['not_paid', 'not_fully_paid', 'paid']);
             $table->date('pay_at');
-            $table->timestamps('created_at');
-            $table->timestamp('updated_at')-> nullable();
+            $table->timestamps();
+            
         });
     }
 

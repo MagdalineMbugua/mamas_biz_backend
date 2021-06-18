@@ -17,8 +17,8 @@ class CreatePaymentsTable extends Migration
             $table-> primary('payment_id');
             $table->foreignId('sales_id')->references('sales_id')->on('sales');
             $table->decimal('amount_paid');
-            $table->timestamps('created_at');
-            $table->timestamp('updated_at')-> nullable();
+            $table->timestamps();
+           
         });
     }
 
