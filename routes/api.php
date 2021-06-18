@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +18,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+// GET, PUT, PATCH, DELETE, POST, HEAD (CORS), OPTIONS
+Route::apiResource('users',UserController::class);
+Route::apiResource('sales',SalesController::class);
+Route::apiResource('products',ProductsController::class);
+Route::apiResource('payments',PaymentController::class);
+
