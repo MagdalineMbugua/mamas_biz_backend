@@ -6,7 +6,8 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 
 class ProductsController extends Controller
-{//fetch product_items by order of creation date
+{
+//fetch product_items by order of product name
 public function index(){
 
     $products = Product::orderby('product_name', 'desc') -> paginate(10);
