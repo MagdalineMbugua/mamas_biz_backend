@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -21,7 +22,11 @@ class UserController extends Controller
     // add user
     public function store(CreateUserRequest $request)
     {
-        return new UserResource(User::create($request->validated()));
+        $user = new User($request->validated());
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        return new UserResource($user);
     }
         
     //display a user
@@ -31,13 +36,13 @@ class UserController extends Controller
     }
         
     //updating a user
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(UpdateUserRequest $request)
     {
         return new UserResource(tap($request)-> update($request ->validated())) ;
     }
         
     //deleting a user
-    public function destroy (User $user)
+    public function destroy(User $user)
     {
         return $user->delete;
     }

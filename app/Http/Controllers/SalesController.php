@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateSalesRequest;
 use App\Models\Sale;
-use Illuminate\Auth\Events\Validated;
-use Illuminate\Http\Request;
+
 
 class SalesController extends Controller
 
 {
 
 //fetch sales_items by order of creation date
-public function index(Request $request){
+public function index(CreateSalesRequest $request){
     $sales = Sale::orderby('created_at', 'desc') -> paginate(20);
     return $sales;
 
