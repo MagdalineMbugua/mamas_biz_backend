@@ -36,14 +36,15 @@ class UserController extends Controller
     }
         
     //updating a user
-    public function update(UpdateUserRequest $request)
+    public function update(UpdateUserRequest $request, User $user)
     {
-        return new UserResource(tap($request)-> update($request ->validated())) ;
+        $user->update($request->validated());
+        return new UserResource($user);
     }
         
     //deleting a user
     public function destroy(User $user)
     {
-        return $user->delete;
+        return $user->delete();
     }
 }
