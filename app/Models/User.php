@@ -21,4 +21,6 @@ class User extends Model
         'password'
     ];
 
+    
+
 }

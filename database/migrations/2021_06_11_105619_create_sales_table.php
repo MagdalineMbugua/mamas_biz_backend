@@ -24,7 +24,6 @@ class CreateSalesTable extends Migration
             $table->timestamps();
 
             $table->foreign('user_id')-> references('user_id') -> on('users')->cascadeOnUpdate();
-            
         });
     }
 
