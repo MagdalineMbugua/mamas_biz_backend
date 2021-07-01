@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Payment extends Model
 {
     use HasFactory;
+    protected $primaryKey = 'payment_id';
+
+    protected $guarded = [];
+
+    public function sales()
+    {
+        return $this->belongsTo(Sale::class);
+    }
 }
