@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateSalesProductRequest;
 use App\Http\Requests\UpdateSalesProductRequest;
 use App\Http\Resources\SalesProductResource;
+use App\Models\Sale;
 use App\Models\Sale_Product;
 use Illuminate\Http\Request;
 
@@ -19,9 +20,12 @@ class SalesProductController extends Controller
     // add sales_product_item
     public function store(CreateSalesProductRequest $request)
     {
-        $sales_product=Sale_Product::create($request->validated());
-        return new SalesProductResource($sales_product);
+        $sale=Sale::find($request->sales_id);
+        $sale->products()->sync([$request->product_id],['quantity' => $request->quantity, 'price' => $request->price]);
+        // $sales_product=Sale_Product::create($request->validated());
+        return $sale->products;
     }
+
 
     //display a sales_product_item
     public function show(Sale_Product $sales_product)

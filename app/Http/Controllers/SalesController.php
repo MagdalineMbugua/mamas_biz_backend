@@ -25,21 +25,22 @@ class SalesController extends Controller
     }
 
     //display a sales_item
-    public function show(Sale $sales)
+    public function show(Sale $sale)
     {
-        return new SalesResource($sales);
+        return new SalesResource($sale);
     }
 
     //updating a sales_item
-    public function update(UpdateSalesRequest $request, Sale $sales)
+    public function update(UpdateSalesRequest $request, Sale $sale)
     {
-        $sales->update($request ->validated());
-        return new SalesResource($sales);
+        
+        $sale->update($request ->validated());
+        return new SalesResource($sale);
     }
 
     //deleting a sales_item
-    public function destroy(Sale $sales)
+    public function destroy(Sale $sale)
     {
-        return $sales->delete();
+        return $sale->delete();
     }
 }

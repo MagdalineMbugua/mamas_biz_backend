@@ -10,4 +10,9 @@ class Product extends Model
     use HasFactory;
     protected $primaryKey = "product_id";
     protected $guarded = [];
+
+    public function sales()
+    {
+        return $this->belongsTo(Sale::class);
+    }
 }

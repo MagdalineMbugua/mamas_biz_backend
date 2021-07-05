@@ -26,8 +26,8 @@ class CreateSalesProductRequest extends FormRequest
         return [
             'sales_id'=>['required', 'exists:sales,sales_id'],
             'product_id'=>['required', 'exists:products,product_id'],
-            'price'=>['required', 'regex:/^\d+(\.\d{1,2})?$/'],
-            'quantity' => ['required', 'regex:/^\d+(\.\d{1,2})?$/'],
+            'price'=>['required', 'integer'],
+            'quantity' => ['required', 'integer'],
         ];
     }
 }
