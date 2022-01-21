@@ -8,19 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class User extends Model
 {
     use HasFactory;
-    protected $primaryKey = 'user_id';
+    protected $guarded = [];
 
-    protected $fillable = [
-        'first_name',
-        'last_name',
-        'phone_number',
-        'password'
-
-    ];
     protected $hidden = [
         'password'
     ];
 
-    
-
+    public function sales()
+    {
+        return $this->hasMany(Sales::class, 'created_by');
+    }
 }

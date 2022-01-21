@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateSalesProductRequest;
 use App\Http\Requests\UpdateSalesProductRequest;
 use App\Http\Resources\SalesProductResource;
-use App\Models\Sale;
+use App\Models\Sales;
 use App\Models\Sale_Product;
 use Illuminate\Http\Request;
 
@@ -13,15 +13,15 @@ class SalesProductController extends Controller
 {   //get sale_product_item
     public function index()
     {
-        $sales_product = Sale_Product::orderby('sales_id', 'desc') -> paginate(20);
+        $sales_product = Sale_Product::orderby('sales_id', 'desc')->paginate(20);
         return SalesProductResource::collection($sales_product);
     }
 
     // add sales_product_item
     public function store(CreateSalesProductRequest $request)
     {
-        $sale=Sale::find($request->sales_id);
-        $sale->products()->sync([$request->product_id],['quantity' => $request->quantity, 'price' => $request->price]);
+        $sale = Sales::find($request->sales_id);
+        $sale->products()->sync([$request->product_id], ['quantity' => $request->quantity, 'price' => $request->price]);
         // $sales_product=Sale_Product::create($request->validated());
         return $sale->products;
     }
@@ -36,7 +36,7 @@ class SalesProductController extends Controller
     //updating a sales_product_item
     public function update(UpdateSalesProductRequest $request, Sale_Product $sales_product)
     {
-        $sales_product->update($request ->validated());
+        $sales_product->update($request->validated());
         return new SalesProductResource($sales_product);
     }
 

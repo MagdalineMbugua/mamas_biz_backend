@@ -14,22 +14,33 @@ class CreateProductsTable extends Migration
     public function up()
     {
         Schema::create('products', function (Blueprint $table) {
-            $table->id ('product_id');
+            $table->id();
             $table->string('product_name');
             $table->decimal('price');
-            $table-> enum('product_type', ['meat_product', 'cattle']);
-            
+            $table->enum('product_type', ['meat_product', 'cattle']);
+            $table->timestamps();
         });
 
-        Schema::create('sale__products',function (Blueprint $table) {
-            $table->unsignedBigInteger('sales_id');
-            $table->decimal('price');
-            $table->decimal('quantity');
-            $table->foreign('sales_id')-> references('sales_id')-> on('sales')->cascadeOnUpdate();
-            $table->unsignedBigInteger ('product_id');
-            $table->foreign('product_id')->references('product_id') -> on('products') ->cascadeOnUpdate();
+        Schema::create(
+            'sale__products',
+            function (Blueprint $table) {
+                $table->unsignedBigInteger('sales_id');
+                $table->decimal('price');
+                $table->decimal('quantity');
+                $table->unsignedBigInteger('product_id');
 
-        }
+                $table->foreign('sales_id')
+                    ->references('id')
+                    ->on('sales')
+                    ->cascadeOnDelete()
+                    ->cascadeOnUpdate();
+
+                $table->foreign('product_id')
+                    ->references('id')
+                    ->on('products')
+                    ->cascadeOnDelete()
+                    ->cascadeOnUpdate();
+            }
 
         );
     }

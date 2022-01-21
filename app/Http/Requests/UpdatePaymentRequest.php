@@ -24,8 +24,8 @@ class UpdatePaymentRequest extends FormRequest
     public function rules()
     {
         return [
-            
-            'amount_paid'=>['required', 'regex:/^\d+(\.\d{1,2})?$/']
+
+            'amount_paid' => ['filled', 'numeric']
         ];
     }
 }

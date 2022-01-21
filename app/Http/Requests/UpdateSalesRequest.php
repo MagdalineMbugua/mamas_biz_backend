@@ -25,11 +25,10 @@ class UpdateSalesRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_id'=>['filled', 'exists:users,user_id'],
             'name' => ['filled', 'string'],
             'phone_number' => ['filled', 'string'],
-            'type' => ['filled', Rule::in(['purchased', 'sold']) ],
-            'status' => ['filled', Rule::in(['not_paid','not_fully_paid', 'paid'])],
+            'type' => ['filled', Rule::in(['purchased', 'sold'])],
+            'status' => ['filled', Rule::in(['not_paid', 'not_fully_paid', 'paid'])],
             'pay_at' => ['filled', 'date'],
         ];
     }

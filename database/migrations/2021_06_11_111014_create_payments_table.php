@@ -14,14 +14,11 @@ class CreatePaymentsTable extends Migration
     public function up()
     {
         Schema::create('payments', function (Blueprint $table) {
-            $table-> id ('payment_id');
-            $table->unsignedBigInteger('sales_id');            
+            $table->id();
+            $table->unsignedBigInteger('sales_id');
             $table->decimal('amount_paid');
             $table->timestamps();
-            $table->foreign('sales_id')->references('sales_id')->on('sales')->cascadeOnUpdate();
-           
         });
-        
     }
 
     /**

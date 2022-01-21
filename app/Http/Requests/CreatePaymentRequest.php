@@ -24,8 +24,8 @@ class CreatePaymentRequest extends FormRequest
     public function rules()
     {
         return [
-            'sales_id'=> ['required', 'exists:sales,sales_id'],
-            'amount_paid'=>['required', 'regex:/^\d+(\.\d{1,2})?$/']
+            'sales_id' => ['filled', 'exists:sales,sales_id'],
+            'amount_paid' => ['required', 'numeric']
         ];
     }
 }

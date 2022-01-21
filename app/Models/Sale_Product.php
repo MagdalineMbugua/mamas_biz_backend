@@ -4,23 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class Sale_Product extends Model
+class Sale_Product extends Pivot
 {
     use HasFactory;
-    protected $guarded = [];
-    public $timestamps =false;
 
+    public $timestamps = false;
 
-
-    public function sales()
-    {
-        return $this->belongsTo(Sale::class);
-    }
-    
-
-    public function products()
-    {
-        return $this->hasOne(Product::class);
-    }
+    protected $table = "sales__products";
 }

@@ -24,8 +24,8 @@ class UpdateSalesProductRequest extends FormRequest
     public function rules()
     {
         return [
-            'price'=>['filled', 'regex:/^\d+(\.\d{1,2})?$/'],
-            'quantity' => ['filled', 'regex:/^\d+(\.\d{1,2})?$/'],
+            'price' => ['filled', 'integer'],
+            'quantity' => ['filled', 'integer'],
         ];
     }
 }

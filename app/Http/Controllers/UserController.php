@@ -6,20 +6,16 @@ use App\Models\User;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-
-
-     //fetch user by order of creation date
     public function index()
     {
-        $users = User::orderby('created_at', 'desc')->paginate(20);
-        return $users;
+        return UserResource::collection(User::orderby('created_at', 'desc')->paginate());
     }
-        
-    // add user
+
     public function store(CreateUserRequest $request)
     {
         $user = new User($request->validated());
@@ -28,23 +24,20 @@ class UserController extends Controller
 
         return new UserResource($user);
     }
-        
-    //display a user
+
     public function show(User $user)
     {
         return new UserResource($user);
     }
-        
-    //updating a user
+
     public function update(UpdateUserRequest $request, User $user)
     {
-        $user->update($request->validated());
-        return new UserResource($user);
+        return new UserResource(tap($user)->update($request->validated()));
     }
-        
-    //deleting a user
+
     public function destroy(User $user)
     {
-        return $user->delete();
+        $user->delete();
+        return response()->json([], Response::HTTP_NO_CONTENT);
     }
 }

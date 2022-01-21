@@ -25,13 +25,13 @@ class CreateSalesRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_id'=>['required', 'exists:users,user_id'],
+            'created_by' => ['required', 'exists:users,user_id'],
             'name' => ['required', 'string'],
             'phone_number' => ['required', 'string'],
-            'type' => ['required', Rule::in(['purchased', 'sold']) ],
-            'status' => ['required', Rule::in(['not_paid','not_fully_paid', 'paid'])],
-            'pay_at'=>['required', 'date']
-            
+            'type' => ['required', Rule::in(['purchased', 'sold'])],
+            'status' => ['required', Rule::in(['not_paid', 'not_fully_paid', 'paid'])],
+            'pay_at' => ['required', 'date']
+
         ];
     }
 }

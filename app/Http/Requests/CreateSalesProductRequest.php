@@ -24,9 +24,9 @@ class CreateSalesProductRequest extends FormRequest
     public function rules()
     {
         return [
-            'sales_id'=>['required', 'exists:sales,sales_id'],
-            'product_id'=>['required', 'exists:products,product_id'],
-            'price'=>['required', 'integer'],
+            'sales_id' => ['filled', 'exists:sales,sales_id'],
+            'product_id' => ['filled', 'exists:products,product_id'],
+            'price' => ['required', 'integer'],
             'quantity' => ['required', 'integer'],
         ];
     }

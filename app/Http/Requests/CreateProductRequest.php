@@ -25,9 +25,9 @@ class CreateProductRequest extends FormRequest
     public function rules()
     {
         return [
-            'product_name'=>['required', 'string'],
-            'price'=>['required', 'regex:/^\d+(\.\d{1,2})?$/'],
-            'product_type'=>['required', Rule::in( ['meat_product', 'cattle'])]
+            'product_name' => ['required', 'string'],
+            'price' => ['required', 'integer'],
+            'product_type' => ['required', Rule::in(['meat_product', 'cattle'])]
         ];
     }
 }

@@ -26,7 +26,7 @@ class CreateUserRequest extends FormRequest
         return [
             'first_name' => ['required', 'string'],
             'last_name' => ['required', 'string'],
-            'phone_number' => ['required', 'string'],
+            'phone_number' => ['required', 'unique', 'string'],
             'password' => ['required', 'string'],
         ];
     }

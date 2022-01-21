@@ -14,16 +14,14 @@ class CreateSalesTable extends Migration
     public function up()
     {
         Schema::create('sales', function (Blueprint $table) {
-            $table->id('sales_id');
-            $table->unsignedBigInteger('user_id');
+            $table->id();
+            $table->unsignedBigInteger('created_by');
             $table->string('name');
             $table->string('phone_number');
             $table->enum('type', ['purchased', 'sold']);
             $table->enum('status', ['not_paid', 'not_fully_paid', 'paid']);
             $table->date('pay_at');
             $table->timestamps();
-
-            $table->foreign('user_id')-> references('user_id') -> on('users')->cascadeOnUpdate();
         });
     }
 

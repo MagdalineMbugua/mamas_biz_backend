@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\SalesController;
+use App\Http\Controllers\UserSalesController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\SalesProductController;
@@ -23,9 +23,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 // GET, PUT, PATCH, DELETE, POST, HEAD (CORS), OPTIONS
-Route::apiResource('users',UserController::class);
-Route::apiResource('sales',SalesController::class);
-Route::apiResource('products',ProductsController::class);
-Route::apiResource('payments',PaymentController::class);
-Route::apiResource('sales_product',SalesProductController::class);
-
+Route::apiResource('users', UserController::class);
+Route::apiResource('sales', UserSalesController::class);
+Route::apiResource('products', ProductsController::class);
+Route::apiResource('payments', PaymentController::class);
+Route::apiResource('sales_product', SalesProductController::class);
