@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserSalesController;
 use App\Http\Controllers\ProductsController;
@@ -28,3 +30,6 @@ Route::apiResource('sales', UserSalesController::class);
 Route::apiResource('products', ProductsController::class);
 Route::apiResource('payments', PaymentController::class);
 Route::apiResource('sales_product', SalesProductController::class);
+Route::post('firebase-login', [LoginController::class, 'signInWithEmailAndPassword']);
+Route::post('login', [LoginController::class, 'tokenExchange']);
+Route::get('logout', LogoutController::class);
