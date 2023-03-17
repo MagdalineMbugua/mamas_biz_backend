@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Notifications\VerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 
-class User extends Authenticable
+class User extends Authenticable implements MustVerifyEmail
 {
     use HasFactory, HasApiTokens, Notifiable;
     protected $guarded = [];
@@ -19,5 +21,10 @@ class User extends Authenticable
     public function sales()
     {
         return $this->hasMany(Sales::class, 'created_by');
+    }
+
+    public function sendEmailVerificationNotification()
+    {
+        $this->notify(new VerifyEmail());
     }
 }
