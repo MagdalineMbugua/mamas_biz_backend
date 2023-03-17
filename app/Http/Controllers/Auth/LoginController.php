@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\FirebaseLoginRequest;
 use App\Http\Requests\LoginRequest;
 use App\Http\Resources\UserResource;
@@ -11,8 +12,16 @@ use Illuminate\Http\JsonResponse;
 use Kreait\Firebase\Exception\Auth\FailedToVerifyToken;
 use Kreait\Laravel\Firebase\Facades\Firebase;
 
+/**
+ * @group Auth
+ */
 class LoginController extends Controller
 {
+    /**
+     * sign in using token exchange
+     * @param LoginRequest $request
+     * @return JsonResponse
+     */
     public function tokenExchange(LoginRequest $request): JsonResponse
     {
         $auth = Firebase::auth();
@@ -51,6 +60,11 @@ class LoginController extends Controller
 
     }
 
+    /**
+     * Sign in using email and password
+     * @param FirebaseLoginRequest $request
+     * @return JsonResponse
+     */
     public function signInWithEmailAndPassword(FirebaseLoginRequest $request)
     {
         $auth = Firebase::auth();
@@ -72,23 +86,4 @@ class LoginController extends Controller
         ]);
     }
 
-    public function signUpWithEmailAndPassword(FirebaseLoginRequest $request)
-    {
-        $auth = Firebase::auth();
-        $auth->CreateUserWithEmailAndPassword($request->email, $request->password);
-        $user = User::firstOrCreate(
-            [
-                'email' => $request->email
-            ], [
-            'name' => $request->name,
-            'email' => $request->email
-        ]);
-
-        $tokenResult = $user->createToken('Personal Access Token');
-        return response()->json([
-            'access_token' => $tokenResult->accessToken,
-            'expires_in' => Carbon::parse($tokenResult->token->expires_at)->toDateTimeString(),
-            'user' => new UserResource($user)
-        ]);
-    }
 }
