@@ -1,15 +1,14 @@
 <?php
 
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\LogoutController;
-use App\Http\Controllers\PasswordResetController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\LogoutController;
+use App\Http\Controllers\Auth\PasswordResetController;
+use App\Http\Controllers\Auth\VerificationController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\SalesProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserSalesController;
-use App\Http\Controllers\ProductsController;
-use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\SalesProductController;
-use App\Http\Controllers\VerificationController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
