@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Auth;
 
 trait HasUserStamps
@@ -17,5 +19,10 @@ trait HasUserStamps
                 $model->updated_by = Auth::id();
             });
         }
+    }
+
+    public function createdBy():BelongsTo
+    {
+        return $this->belongsTo(User::class, 'created_by');
     }
 }
