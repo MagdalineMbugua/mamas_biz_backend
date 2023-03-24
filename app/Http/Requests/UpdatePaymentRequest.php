@@ -11,7 +11,7 @@ class UpdatePaymentRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,11 +21,12 @@ class UpdatePaymentRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
 
-            'amount_paid' => ['filled', 'numeric']
+            'amount_paid' => ['filled', 'numeric'],
+            'next_pay_at'=>['nullable', 'date']
         ];
     }
 }

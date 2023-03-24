@@ -20,16 +20,13 @@ class SalesFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         return [
-            'name' => $this->faker->name(),
-            'phone_number' => $this->faker->phoneNumber(),
-            'type' => $this->faker->randomElement(['purchased', 'sold']),
-            'status' => $this->faker->randomElement(['not_paid', 'not_fully_paid', 'paid']),
+            'trader_name' => $this->faker->name(),
+            'trader_phone_number' => $this->faker->phoneNumber(),
+            'sales_type' => $this->faker->randomElement(['purchased', 'sold']),
             'created_by' => User::factory()->create(),
-            'pay_at' => $this->faker->date(),
-
         ];
     }
 }

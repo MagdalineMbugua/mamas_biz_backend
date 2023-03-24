@@ -11,20 +11,6 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function index()
-    {
-        return UserResource::collection(User::orderby('created_at', 'desc')->paginate());
-    }
-
-    public function store(CreateUserRequest $request)
-    {
-        $user = new User($request->validated());
-        $user->password = Hash::make($request->password);
-        $user->save();
-
-        return new UserResource($user);
-    }
-
     public function show(User $user)
     {
         return new UserResource($user);

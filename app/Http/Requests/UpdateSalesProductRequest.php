@@ -11,9 +11,9 @@ class UpdateSalesProductRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,11 +21,18 @@ class UpdateSalesProductRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            'price' => ['filled', 'integer'],
-            'quantity' => ['filled', 'integer'],
+            'data' => ['required', 'array'],
+            'data.trader_name' => ['filled', 'string'],
+            'data.trader_phone_number' => ['filled', 'string'],
+            'data.sales_type' => ['filled', 'string'],
+            'data.amount_paid' => ['filled', 'numeric'],
+            'data.next_pay_at' => ['nullable', 'string'],
+            'data.products' => ['filled', 'array'],
+            'data.products.*.id' => ['filled', 'integer'],
+            'data.products.*.price' => ['filled', 'string'],
         ];
     }
 }

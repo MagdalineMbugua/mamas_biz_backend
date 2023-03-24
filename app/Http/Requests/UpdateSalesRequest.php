@@ -12,7 +12,7 @@ class UpdateSalesRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -22,14 +22,13 @@ class UpdateSalesRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            'name' => ['filled', 'string'],
-            'phone_number' => ['filled', 'string'],
-            'type' => ['filled', Rule::in(['purchased', 'sold'])],
-            'status' => ['filled', Rule::in(['not_paid', 'not_fully_paid', 'paid'])],
-            'pay_at' => ['filled', 'date'],
+            'data' => ['required', 'array'],
+            'data.trader_name' => ['filled', 'string'],
+            'data.trader_phone_number' => ['filled', 'string'],
+            'data.sales_type' => ['filled', 'string'],
         ];
     }
 }

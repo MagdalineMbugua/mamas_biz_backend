@@ -2,47 +2,63 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateSalesProductRequest;
-use App\Http\Requests\UpdateSalesProductRequest;
-use App\Http\Resources\SalesProductResource;
+use App\Http\Requests\ProductRequest;
+use App\Http\Resources\ProductResource;
+use App\Models\Product;
 use App\Models\Sales;
-use App\Models\Sale_Product;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Symfony\Component\HttpFoundation\Response;
 
 class SalesProductController extends Controller
-{   //get sale_product_item
-    public function index()
+{
+    /**
+     * add product to sale
+     * @param ProductRequest $request
+     * @param $saleId
+     * @return AnonymousResourceCollection
+     */
+    public function store(ProductRequest $request, $saleId): AnonymousResourceCollection
     {
-        $sales_product = Sale_Product::orderby('sales_id', 'desc')->paginate(20);
-        return SalesProductResource::collection($sales_product);
+        $sale = Sales::find($saleId);
+        collect($request->validated()['data'])->each(function ($product) use ($sale){
+            $sale->products()->attach([$product['product_id']=> [
+                'price'=>$product['price'],
+                'quantity'=>$product['quantity']
+            ]]);
+        });
+        return ProductResource::collection($sale->products);
     }
 
-    // add sales_product_item
-    public function store(CreateSalesProductRequest $request)
+    /**
+     * update products under sale
+     * @param ProductRequest $request
+     * @param $saleId
+     * @return ProductResource
+     */
+    public function update(ProductRequest $request,$saleId): ProductResource
     {
-        $sale = Sales::find($request->sales_id);
-        $sale->products()->sync([$request->product_id], ['quantity' => $request->quantity, 'price' => $request->price]);
-        // $sales_product=Sale_Product::create($request->validated());
-        return $sale->products;
+        $sale = Sales::find($saleId);
+        collect($request->validated()['data'])->each(function ($product) use ($sale){
+            $sale->products()->sync([$product['product_id']=> [
+                'price'=>$product['price'],
+                'quantity'=>$product['quantity']
+            ]]);
+        });
+        return new ProductResource($sale->products) ;
     }
 
-
-    //display a sales_product_item
-    public function show(Sale_Product $sales_product)
+    /**
+     * Delete product under sale
+     * @param $saleId
+     * @param Product $product
+     * @return JsonResponse
+     */
+    public function destroy($saleId,Product $product): JsonResponse
     {
-        return new SalesProductResource($sales_product);
-    }
-
-    //updating a sales_product_item
-    public function update(UpdateSalesProductRequest $request, Sale_Product $sales_product)
-    {
-        $sales_product->update($request->validated());
-        return new SalesProductResource($sales_product);
-    }
-
-    //deleting a sales_product_item
-    public function destroy(Sale_Product $sales_product)
-    {
-        return $sales_product->delete();
+        $sale = Sales::find($saleId);
+        $sale->products()->detach($product->id);
+        return response()->json(['message'=>'Successfully Deleted'], Response::HTTP_NO_CONTENT);
     }
 }

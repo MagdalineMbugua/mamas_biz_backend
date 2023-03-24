@@ -11,12 +11,13 @@ class CreatePaymentsTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('sales_id');
             $table->decimal('amount_paid');
+            $table->date('next_pay_at')->nullable();
             $table->timestamps();
         });
     }
@@ -26,7 +27,7 @@ class CreatePaymentsTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('payments');
     }
