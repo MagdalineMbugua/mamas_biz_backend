@@ -25,9 +25,10 @@ class UpdateProductRequest extends FormRequest
     public function rules()
     {
         return [
-            'product_name' => ['filled', 'string'],
-            'price' => ['filled', 'integer'],
-            'product_type' => ['filled', Rule::in(['meat_product', 'cattle'])]
+            'data'=>['required', 'array'],
+            'data.*.product_id' => ['required', 'string'],
+            'data.*.price' => ['filled', 'string'],
+            'data.*.quantity' => ['filled', 'string'],
         ];
     }
 }

@@ -4,11 +4,10 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\PasswordResetController;
 use App\Http\Controllers\Auth\VerificationController;
-use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\SalesPaymentController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SalesProductController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\UserSalesController;
+use App\Http\Controllers\UserSalesProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,11 +31,36 @@ Route::middleware('api')->group(function () {
     Route::post('password-reset', [PasswordResetController::class, 'passwordReset'])->name('password-reset');
 });
 
-// GET, PUT, PATCH, DELETE, POST, HEAD (CORS), OPTIONS
-Route::apiResource('users', UserController::class);
-Route::apiResource('sales', UserSalesController::class);
-Route::apiResource('products', ProductsController::class);
-Route::apiResource('payments', PaymentController::class);
-Route::apiResource('sales_product', SalesProductController::class);
+
+Route::middleware(['auth:api'])->group(function () {
+    Route::apiResource('products-sales', UserSalesProductController::class)->names(
+        [
+            'index' => 'products-sales.index',
+            'store' => 'products-sales.store',
+            'show' => 'products-sales.show',
+            'update' => 'products-sales.update',
+            'destroy' => 'products-sales.destroy',
+        ]
+    );
+    Route::apiResource('products', ProductController::class)->only(['index', 'show'])->names([
+        'index' => 'products.index',
+        'show' => 'products.show'
+    ]);
+    Route::apiResource('sales/{sale}/products', SalesProductController::class)->only(['store', 'destroy'])
+        ->names([
+            'store' => 'sale-products.store',
+            'destroy' => 'sale-products.destroy'
+        ]);
+    Route::patch('sales/{sale}/products-update', [SalesProductController::class, 'update'])->name('sale-products.update');
+    Route::apiResource('sales/{sale}/payments', SalesPaymentController::class)->names([
+        'index' => 'sales-payments.index',
+        'store' => 'sales-payments.store',
+        'show' => 'sales-payments.show',
+        'update' => 'sales-payments.update',
+        'destroy' => 'sales-payments.destroy'
+    ]);
+
+});
+
 
 

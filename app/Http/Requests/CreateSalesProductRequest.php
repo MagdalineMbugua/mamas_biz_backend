@@ -11,7 +11,7 @@ class CreateSalesProductRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,13 +21,21 @@ class CreateSalesProductRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            'sales_id' => ['filled', 'exists:sales,sales_id'],
-            'product_id' => ['filled', 'exists:products,product_id'],
-            'price' => ['required', 'integer'],
-            'quantity' => ['required', 'integer'],
+            'data' => ['required', 'array'],
+            'data.trader_name' => ['required', 'string'],
+            'data.trader_phone_number' => ['required', 'string'],
+            'data.sales_type' => ['required', 'string'],
+            'data.amount_paid' => ['required', 'numeric'],
+            'data.next_pay_at' => ['nullable', 'string'],
+            'data.products' => ['required', 'array'],
+            'data.products.*.product_name' => ['required', 'string'],
+            'data.products.*.price' => ['required', 'string'],
+            'data.products.*.uom' => ['required', 'string'],
+            'data.products.*.quantity' => ['required', 'string'],
+            'data.products.*.product_type' => ['required', 'string'],
         ];
     }
 }

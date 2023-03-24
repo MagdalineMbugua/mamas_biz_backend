@@ -11,7 +11,7 @@ class CreatePaymentRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,11 +21,11 @@ class CreatePaymentRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            'sales_id' => ['filled', 'exists:sales,sales_id'],
-            'amount_paid' => ['required', 'numeric']
+            'amount_paid' => ['required', 'numeric'],
+            'next_pay_at'=>['nullable','date']
         ];
     }
 }

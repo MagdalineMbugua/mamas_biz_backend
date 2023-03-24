@@ -2,25 +2,16 @@
 
 namespace App\Http\Filters;
 
+use Illuminate\Database\Eloquent\Builder;
+
 class SalesFilter extends Filter
 {
-    public function name($value)
+    public function traderName($value): Builder
     {
-        return  $this->builder->where('name', 'like', $value);
+        return  $this->builder->where('trader_name', 'like', $value);
     }
-
-    public function status($value)
+    public function salesType($value): Builder
     {
-        return $this->builder->whereIn('status', explode(',', $value));
-    }
-
-    public function phone_number($value)
-    {
-        return $this->builder->where('phone_number', '=', $value);
-    }
-
-    public function type($value)
-    {
-        return $this->builder->where('type', '=', $value);
+        return $this->builder->where('sales_type', '=', $value);
     }
 }

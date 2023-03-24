@@ -15,12 +15,10 @@ class CreateSalesTable extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
+            $table->string('trader_name');
+            $table->string('trader_phone_number');
+            $table->enum('sales_type', ['purchased', 'sold']);
             $table->unsignedBigInteger('created_by');
-            $table->string('name');
-            $table->string('phone_number');
-            $table->enum('type', ['purchased', 'sold']);
-            $table->enum('status', ['not_paid', 'not_fully_paid', 'paid']);
-            $table->date('pay_at');
             $table->timestamps();
         });
     }
