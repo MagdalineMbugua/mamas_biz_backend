@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\SalesPaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SalesProductController;
+use App\Http\Controllers\UserPaymentController;
 use App\Http\Controllers\UserSalesProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -59,7 +60,10 @@ Route::middleware(['auth:api'])->group(function () {
         'update' => 'sales-payments.update',
         'destroy' => 'sales-payments.destroy'
     ]);
-
+    Route::apiResource('payments',UserPaymentController::class)->only(['index','show'])->names([
+        'index'=>'payments.index',
+        'show'=>'payments.show'
+    ]);
 });
 
 
