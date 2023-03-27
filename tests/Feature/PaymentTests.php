@@ -109,4 +109,45 @@ class PaymentTests extends TestCase
             ->where('data.sales_id', $sales->id)
             ->where('data.amount_paid', '100.00'));
     }
+
+    public function testItListUserPayments()
+    {
+        $user = User::factory()->create();
+        $sales = Sales::factory()
+            ->hasAttached(Product::factory()->count(3), ['price' => '30', 'quantity' => '4'])
+            ->state(['created_by' => $user->id])
+            ->create();
+        Payment::factory()->state(['sales_id' => $sales->id, 'amount_paid' => '100'])->create();
+        Payment::factory()->state(['sales_id' => $sales->id, 'amount_paid' => '10'])->create();
+
+        $response = $this->actingAs($user, 'api')->getJson(route('payments.index'));
+
+        $response->assertStatus(200)->assertJsonCount(2, 'data')
+            ->assertJson(fn(AssertableJson $json) => $json
+                ->where('data.0.sales.trader_name', $sales->trader_name)
+                ->where('data.0.sales.trader_phone_number', $sales->trader_phone_number)
+                ->where('data.0.amount_paid', '100.00')
+                ->where('data.1.amount_paid', '10.00')
+                ->etc());
+    }
+
+    public function testItShowsSpecificPayment(){
+        $user = User::factory()->create();
+        $sales = Sales::factory()
+            ->hasAttached(Product::factory()->count(3), ['price' => '30', 'quantity' => '4'])
+            ->state(['created_by' => $user->id])
+            ->create();
+        $payment=Payment::factory()->state(['sales_id' => $sales->id, 'amount_paid' => '100'])->create();
+
+        $response = $this->actingAs($user, 'api')->getJson(route('payments.show',[
+            'payment'=>$payment->id
+        ]));
+
+        $response->assertStatus(200)
+            ->assertJson(fn(AssertableJson $json) => $json
+                ->where('data.sales.trader_name', $sales->trader_name)
+                ->where('data.sales.trader_phone_number', $sales->trader_phone_number)
+                ->where('data.amount_paid', '100.00')
+                ->etc());
+    }
 }
