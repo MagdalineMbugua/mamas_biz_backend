@@ -8,12 +8,16 @@
         "php": "8.2.2",
         "ajcastro/eager-load-pivot-relations": "^0.3.0",
         "auth0/login": "^7.4",
+        "babenkoivan/elastic-migrations": "^3.3",
+        "babenkoivan/elastic-scout-driver": "^3.1",
+        "babenkoivan/elastic-scout-driver-plus": "^4.5",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "kreait/laravel-firebase": "^4.2",
         "laravel/framework": "^8.40",
         "laravel/passport": "^10.4",
+        "laravel/scout": "^9.8",
         "laravel/tinker": "^2.5"
     },
     "require-dev": {

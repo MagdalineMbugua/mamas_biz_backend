@@ -6,6 +6,7 @@ use AjCastro\EagerLoadPivotRelations\EagerLoadPivotTrait;
 use App\Http\Filters\Filterable;
 use App\Models\QueryBuilders\SalesQueryBuilder;
 use Database\Factories\SalesFactory;
+use Elastic\ScoutDriverPlus\Searchable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -14,13 +15,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Sales extends Model
 {
     use HasFactory;
-    use Filterable;
     use HasUserStamps;
-    use Filterable;
     use EagerLoadPivotTrait;
+    use Searchable;
+    use Filterable;
 
     protected $guarded = [];
-    protected $cast = [
+    protected array $cast = [
         'created_by' => 'integer',
     ];
 
@@ -44,5 +45,15 @@ class Sales extends Model
     public function newEloquentBuilder($query): SalesQueryBuilder
     {
         return new SalesQueryBuilder($query);
+    }
+
+    public function toSearchableArray(): array
+    {
+        return $this->toArray();
+    }
+
+    public function shouldBeSearchable(): bool
+    {
+        return count($this->toSearchableArray()) > 0;
     }
 }
