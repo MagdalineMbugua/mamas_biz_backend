@@ -4,6 +4,8 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\PasswordResetController;
 use App\Http\Controllers\Auth\VerificationController;
+use App\Http\Controllers\ProductSearchController;
+use App\Http\Controllers\SaleSearchController;
 use App\Http\Controllers\SalesPaymentController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SalesProductController;
@@ -64,6 +66,8 @@ Route::middleware(['auth:api'])->group(function () {
         'index'=>'payments.index',
         'show'=>'payments.show'
     ]);
+    Route::get('sales-search', SaleSearchController::class)->name('sale-search.index');
+    Route::get('products-search', ProductSearchController::class)->name('product-search.index');
 });
 
 

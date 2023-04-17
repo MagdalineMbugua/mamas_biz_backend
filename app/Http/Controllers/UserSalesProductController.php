@@ -3,19 +3,18 @@
 namespace App\Http\Controllers;
 
 
+
 use App\Http\Filters\SalesFilter;
 use App\Http\Requests\CreateSalesProductRequest;
 use App\Http\Requests\UpdateSalesProductRequest;
 use App\Http\Requests\UpdateSalesRequest;
 use App\Http\Resources\SalesResource;
-use App\Models\Payment;
 use App\Models\Product;
 use App\Models\Sales;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
-use phpseclib3\Math\BigInteger\Engines\PHP\Reductions\Barrett;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
