@@ -6,11 +6,18 @@ use Illuminate\Database\Eloquent\Builder;
 
 class SalesFilter extends Filter
 {
-    public function traderName($value): Builder
+
+    public function trader_name ($value): Builder
     {
-        return  $this->builder->where('trader_name', 'like', $value);
+        return $this->builder->where('trader_name', '=', $value);
     }
-    public function salesType($value): Builder
+
+    public function trader_phone_number ($value): Builder
+    {
+        return $this->builder->where('trader_phone_number', '=', $value);
+    }
+
+    public function sales_type ($value): Builder
     {
         return $this->builder->where('sales_type', '=', $value);
     }
