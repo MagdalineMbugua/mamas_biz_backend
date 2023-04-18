@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Jobs\FetchUserSales;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -24,7 +25,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->job(new FetchUserSales())
+            ->timezone('America/New_York')
+            ->dailyAt('8:00');
     }
 
     /**

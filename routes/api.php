@@ -4,7 +4,9 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\PasswordResetController;
 use App\Http\Controllers\Auth\VerificationController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProductSearchController;
+use App\Http\Controllers\RegisterFCMController;
 use App\Http\Controllers\SaleSearchController;
 use App\Http\Controllers\SalesPaymentController;
 use App\Http\Controllers\ProductController;
@@ -68,6 +70,11 @@ Route::middleware(['auth:api'])->group(function () {
     ]);
     Route::get('sales-search', SaleSearchController::class)->name('sale-search.index');
     Route::get('products-search', ProductSearchController::class)->name('product-search.index');
+    Route::post('register-fcm', RegisterFCMController::class)->name('register-fcm');
+
+    Route::get('notifications', [NotificationController::class, 'index'])->name('notifications.index');
+    Route::post('notifications/mark-all-as-read', [NotificationController::class,'markAllAsRead'])->name('mark-all-as-read');
+    Route::post('notifications/{notification}/mark-as-read', [NotificationController::class,'markAsRead'])->name('mark-as-read');
 });
 
 
